@@ -1,0 +1,65 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: DefiHeroes
+    network: arbitrum-one
+    source:
+      address: "0x8ec75bc963181489d7fc1d892f687b8b0987d9ec"
+      abi: DefiHeroes
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - ExperienceGained
+        - ExperienceSpent
+        - LeveledUp
+        - NFTCreated
+        - OwnershipTransferred
+        - Paused
+        - Quest
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+        - Unpaused
+        - WarriorCreated
+      abis:
+        - name: DefiHeroes
+          file: ./abis/DefiHeroes.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: ExperienceGained(uint256,uint256,uint256)
+          handler: handleExperienceGained
+        - event: ExperienceSpent(uint256,uint256,uint256)
+          handler: handleExperienceSpent
+        - event: LeveledUp(indexed address,uint256,uint256)
+          handler: handleLeveledUp
+        - event: NFTCreated(indexed uint256)
+          handler: handleNFTCreated
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Paused(address)
+          handler: handlePaused
+        - event: Quest(uint256,uint256,uint256)
+          handler: handleQuest
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+        - event: Unpaused(address)
+          handler: handleUnpaused
+        - event: WarriorCreated(uint256,(uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleWarriorCreated
+      file: ./src/defi-heroes.ts
