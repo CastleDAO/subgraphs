@@ -21,6 +21,8 @@ type All @entity {
   id: ID!
   numTokens: BigInt!
   numOwners: BigInt!
+  minted: [BigInt!]!
+  burned: [BigInt!]!
 }
 
 type Owner @entity {
