@@ -15,7 +15,7 @@ type Heroes @entity {
   constitution: BigInt!
 }
 
-type heroQuest @entity {
+type HeroQuest @entity {
   id: ID!
   tokenID: BigInt!
   date: BigInt!

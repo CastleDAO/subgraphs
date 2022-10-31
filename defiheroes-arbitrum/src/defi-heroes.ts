@@ -18,7 +18,7 @@ import {
   WarriorCreated,
   SetXPPerQuestCall__Outputs,
 } from "../generated/DefiHeroes/DefiHeroes";
-import { Heroes, All, Owner, heroQuest } from "../generated/schema";
+import { Heroes, All, Owner, HeroQuest } from "../generated/schema";
 
 let zeroAddress = "0x0000000000000000000000000000000000000000";
 
@@ -124,7 +124,7 @@ export function handleQuest(event: Quest): void {
   let tokenId = event.params.tokenId;
   let id = event.address.toHex() + "_" + tokenId.toString();
 
-  let quest = new heroQuest(id);
+  let quest = new HeroQuest(id);
   quest.id = id;
   quest.tokenID = tokenId;
   quest.date = event.block.timestamp;
