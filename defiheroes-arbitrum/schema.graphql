@@ -1,6 +1,37 @@
-type ExampleEntity @entity {
+type Heroes @entity {
   id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  approved: Bytes! # address
+  tokenID: BigInt!
+  owner: Owner!
+  mintTime: BigInt!
+  tokenURI: String!
+  level: BigInt!
+  speed: BigInt!
+  intelligence: BigInt!
+  strength: BigInt!
+  abilityPower: BigInt!
+  defense: BigInt!
+  agility: BigInt!
+  magicResistance: BigInt!
+  constitution: BigInt!
+}
+
+type heroQuest @entity {
+  id: ID!
+  tokenID: BigInt!
+  date: BigInt!
+  xpEarned: BigInt!
+}
+
+type All @entity {
+  id: ID!
+  numTokens: BigInt!
+  numOwners: BigInt!
+  minted: [BigInt!]!
+  burned: [BigInt!]!
+}
+
+type Owner @entity {
+  id: ID!
+  tokens: [Heroes!]! @derivedFrom(field: "owner")
+  numTokens: BigInt!
 }
