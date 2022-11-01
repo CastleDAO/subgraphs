@@ -1,0 +1,16 @@
+{
+  "name": "castledao-castles-arbitrum",
+  "license": "UNLICENSED",
+  "scripts": {
+    "codegen": "graph codegen",
+    "build": "graph build",
+    "deploy": "graph deploy --node https://api.studio.thegraph.com/deploy/ castledao-castles-arbitrum",
+    "create-local": "graph create --node http://localhost:8020/ castledao-castles-arbitrum",
+    "remove-local": "graph remove --node http://localhost:8020/ castledao-castles-arbitrum",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 castledao-castles-arbitrum"
+  },
+  "dependencies": {
+    "@graphprotocol/graph-cli": "0.25.0",
+    "@graphprotocol/graph-ts": "0.25.0"
+  }
+}

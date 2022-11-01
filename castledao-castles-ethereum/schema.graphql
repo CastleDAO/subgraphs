@@ -1,0 +1,37 @@
+type Castle @entity {
+  id: ID!
+  tokenID: BigInt!
+  owner: Owner!
+  mintTime: BigInt!
+  tokenURI: String!
+  defense: BigInt!
+  rarity: String!
+  capacity: BigInt!
+  warrior: String!
+  name: String!
+  goldGeneration: BigInt!
+  castleType: String!
+  rarityNumber: BigInt!
+  skillType: String!
+  skillAmount: BigInt!
+  warriorName: String!
+}
+
+type All @entity {
+  id: ID!
+  numTokens: BigInt!
+  numOwners: BigInt!
+  minted: [BigInt!]!
+  burned: [BigInt!]!
+}
+
+type Owner @entity {
+  id: ID!
+  tokens: [Castle!]! @derivedFrom(field: "owner")
+  numTokens: BigInt!
+}type ContractApproval @entity {
+  id: ID!
+  owner: Bytes! # address
+  approved: Bytes! # address
+  tokenId: BigInt! # uint256
+}
