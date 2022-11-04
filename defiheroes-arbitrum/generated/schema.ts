@@ -158,9 +158,18 @@ export class Heroes extends Entity {
   set constitution(value: BigInt) {
     this.set("constitution", Value.fromBigInt(value));
   }
+
+  get experience(): BigInt {
+    let value = this.get("experience");
+    return value!.toBigInt();
+  }
+
+  set experience(value: BigInt) {
+    this.set("experience", Value.fromBigInt(value));
+  }
 }
 
-export class HeroQuest extends Entity {
+export class Quest extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -168,18 +177,18 @@ export class HeroQuest extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save HeroQuest entity without an ID");
+    assert(id != null, "Cannot save Quest entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type HeroQuest must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Quest must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("HeroQuest", id.toString(), this);
+      store.set("Quest", id.toString(), this);
     }
   }
 
-  static load(id: string): HeroQuest | null {
-    return changetype<HeroQuest | null>(store.get("HeroQuest", id));
+  static load(id: string): Quest | null {
+    return changetype<Quest | null>(store.get("Quest", id));
   }
 
   get id(): string {

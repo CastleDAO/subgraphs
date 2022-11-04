@@ -9,7 +9,7 @@ import {
   NFTCreated,
   OwnershipTransferred,
   Paused,
-  Quest,
+  Quest as QuestEvent,
   RoleAdminChanged,
   RoleGranted,
   RoleRevoked,
@@ -18,7 +18,7 @@ import {
   WarriorCreated,
   SetXPPerQuestCall__Outputs,
 } from "../generated/DefiHeroes/DefiHeroes";
-import { Heroes, All, Owner, HeroQuest } from "../generated/schema";
+import { Heroes, All, Owner, Quest } from "../generated/schema";
 
 let zeroAddress = "0x0000000000000000000000000000000000000000";
 
@@ -87,7 +87,16 @@ export function handleApproval(event: Approval): void {
 
 export function handleApprovalForAll(event: ApprovalForAll): void {}
 
-export function handleExperienceGained(event: ExperienceGained): void {}
+export function handleExperienceGained(event: ExperienceGained): void {
+  let tokenId = event.params.tokenId;
+  let id = event.address.toHex() + "_" + tokenId.toString();
+  let defiHero = Heroes.load(id);
+
+  let contract = DefiHeroes.bind(event.address);
+
+  if (defiHero) 
+    defiHero.experience = contract.experience(tokenId);
+}
 
 export function handleExperienceSpent(event: ExperienceSpent): void {}
 
@@ -109,7 +118,7 @@ export function handleLeveledUp(event: LeveledUp): void {
     defiHero.magicResistance = contract.warriors(tokenId).getAgility();
     defiHero.constitution = contract.warriors(tokenId).getConstitution();
     defiHero.level = contract.warriors(tokenId).getLevel();
-
+    defiHero.experience = contract.experience(tokenId);
     defiHero.save();
   }
 }
@@ -120,11 +129,11 @@ export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 export function handlePaused(event: Paused): void {}
 
-export function handleQuest(event: Quest): void {
+export function handleQuest(event: QuestEvent): void {
   let tokenId = event.params.tokenId;
   let id = event.address.toHex() + "_" + tokenId.toString();
 
-  let quest = new HeroQuest(id);
+  let quest = new Quest(id);
   quest.id = id;
   quest.tokenID = tokenId;
   quest.date = event.block.timestamp;
@@ -197,6 +206,7 @@ export function handleTransfer(event: Transfer): void {
               .warriors(tokenId)
               .getConstitution();
             defiHero.level = BigInt.fromI32(0);
+            defiHero.experience = contract.experience(tokenId);
           }
 
           if (from == zeroAddress) {

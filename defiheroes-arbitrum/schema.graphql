@@ -13,9 +13,10 @@ type Heroes @entity {
   agility: BigInt!
   magicResistance: BigInt!
   constitution: BigInt!
+  experience: BigInt!
 }
 
-type HeroQuest @entity {
+type Quest @entity {
   id: ID!
   tokenID: BigInt!
   date: BigInt!
