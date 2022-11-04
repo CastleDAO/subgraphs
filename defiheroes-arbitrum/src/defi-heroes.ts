@@ -196,7 +196,7 @@ export function handleTransfer(event: Transfer): void {
             defiHero.constitution = contract
               .warriors(tokenId)
               .getConstitution();
-            defiHero.level = contract.warriors(tokenId).getLevel();
+            defiHero.level = BigInt.fromI32(0);
           }
 
           if (from == zeroAddress) {
