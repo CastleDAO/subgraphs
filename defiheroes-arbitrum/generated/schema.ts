@@ -11,7 +11,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class ExampleEntity extends Entity {
+export class Heroes extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -19,18 +19,18 @@ export class ExampleEntity extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id != null, "Cannot save ExampleEntity entity without an ID");
+    assert(id != null, "Cannot save Heroes entity without an ID");
     if (id) {
       assert(
         id.kind == ValueKind.STRING,
-        `Entities of type ExampleEntity must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+        `Entities of type Heroes must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
       );
-      store.set("ExampleEntity", id.toString(), this);
+      store.set("Heroes", id.toString(), this);
     }
   }
 
-  static load(id: string): ExampleEntity | null {
-    return changetype<ExampleEntity | null>(store.get("ExampleEntity", id));
+  static load(id: string): Heroes | null {
+    return changetype<Heroes | null>(store.get("Heroes", id));
   }
 
   get id(): string {
@@ -42,30 +42,306 @@ export class ExampleEntity extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get count(): BigInt {
-    let value = this.get("count");
+  get tokenID(): BigInt {
+    let value = this.get("tokenID");
     return value!.toBigInt();
   }
 
-  set count(value: BigInt) {
-    this.set("count", Value.fromBigInt(value));
+  set tokenID(value: BigInt) {
+    this.set("tokenID", Value.fromBigInt(value));
   }
 
-  get owner(): Bytes {
+  get owner(): string {
     let value = this.get("owner");
-    return value!.toBytes();
+    return value!.toString();
   }
 
-  set owner(value: Bytes) {
-    this.set("owner", Value.fromBytes(value));
+  set owner(value: string) {
+    this.set("owner", Value.fromString(value));
   }
 
-  get approved(): Bytes {
-    let value = this.get("approved");
-    return value!.toBytes();
+  get mintTime(): BigInt {
+    let value = this.get("mintTime");
+    return value!.toBigInt();
   }
 
-  set approved(value: Bytes) {
-    this.set("approved", Value.fromBytes(value));
+  set mintTime(value: BigInt) {
+    this.set("mintTime", Value.fromBigInt(value));
+  }
+
+  get tokenURI(): string {
+    let value = this.get("tokenURI");
+    return value!.toString();
+  }
+
+  set tokenURI(value: string) {
+    this.set("tokenURI", Value.fromString(value));
+  }
+
+  get level(): BigInt {
+    let value = this.get("level");
+    return value!.toBigInt();
+  }
+
+  set level(value: BigInt) {
+    this.set("level", Value.fromBigInt(value));
+  }
+
+  get speed(): BigInt {
+    let value = this.get("speed");
+    return value!.toBigInt();
+  }
+
+  set speed(value: BigInt) {
+    this.set("speed", Value.fromBigInt(value));
+  }
+
+  get intelligence(): BigInt {
+    let value = this.get("intelligence");
+    return value!.toBigInt();
+  }
+
+  set intelligence(value: BigInt) {
+    this.set("intelligence", Value.fromBigInt(value));
+  }
+
+  get strength(): BigInt {
+    let value = this.get("strength");
+    return value!.toBigInt();
+  }
+
+  set strength(value: BigInt) {
+    this.set("strength", Value.fromBigInt(value));
+  }
+
+  get abilityPower(): BigInt {
+    let value = this.get("abilityPower");
+    return value!.toBigInt();
+  }
+
+  set abilityPower(value: BigInt) {
+    this.set("abilityPower", Value.fromBigInt(value));
+  }
+
+  get defense(): BigInt {
+    let value = this.get("defense");
+    return value!.toBigInt();
+  }
+
+  set defense(value: BigInt) {
+    this.set("defense", Value.fromBigInt(value));
+  }
+
+  get agility(): BigInt {
+    let value = this.get("agility");
+    return value!.toBigInt();
+  }
+
+  set agility(value: BigInt) {
+    this.set("agility", Value.fromBigInt(value));
+  }
+
+  get magicResistance(): BigInt {
+    let value = this.get("magicResistance");
+    return value!.toBigInt();
+  }
+
+  set magicResistance(value: BigInt) {
+    this.set("magicResistance", Value.fromBigInt(value));
+  }
+
+  get constitution(): BigInt {
+    let value = this.get("constitution");
+    return value!.toBigInt();
+  }
+
+  set constitution(value: BigInt) {
+    this.set("constitution", Value.fromBigInt(value));
+  }
+
+  get experience(): BigInt {
+    let value = this.get("experience");
+    return value!.toBigInt();
+  }
+
+  set experience(value: BigInt) {
+    this.set("experience", Value.fromBigInt(value));
+  }
+}
+
+export class Quest extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Quest entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Quest must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Quest", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Quest | null {
+    return changetype<Quest | null>(store.get("Quest", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokenID(): BigInt {
+    let value = this.get("tokenID");
+    return value!.toBigInt();
+  }
+
+  set tokenID(value: BigInt) {
+    this.set("tokenID", Value.fromBigInt(value));
+  }
+
+  get date(): BigInt {
+    let value = this.get("date");
+    return value!.toBigInt();
+  }
+
+  set date(value: BigInt) {
+    this.set("date", Value.fromBigInt(value));
+  }
+
+  get xpEarned(): BigInt {
+    let value = this.get("xpEarned");
+    return value!.toBigInt();
+  }
+
+  set xpEarned(value: BigInt) {
+    this.set("xpEarned", Value.fromBigInt(value));
+  }
+}
+
+export class All extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save All entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type All must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("All", id.toString(), this);
+    }
+  }
+
+  static load(id: string): All | null {
+    return changetype<All | null>(store.get("All", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get numTokens(): BigInt {
+    let value = this.get("numTokens");
+    return value!.toBigInt();
+  }
+
+  set numTokens(value: BigInt) {
+    this.set("numTokens", Value.fromBigInt(value));
+  }
+
+  get numOwners(): BigInt {
+    let value = this.get("numOwners");
+    return value!.toBigInt();
+  }
+
+  set numOwners(value: BigInt) {
+    this.set("numOwners", Value.fromBigInt(value));
+  }
+
+  get minted(): Array<BigInt> {
+    let value = this.get("minted");
+    return value!.toBigIntArray();
+  }
+
+  set minted(value: Array<BigInt>) {
+    this.set("minted", Value.fromBigIntArray(value));
+  }
+
+  get burned(): Array<BigInt> {
+    let value = this.get("burned");
+    return value!.toBigIntArray();
+  }
+
+  set burned(value: Array<BigInt>) {
+    this.set("burned", Value.fromBigIntArray(value));
+  }
+}
+
+export class Owner extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id != null, "Cannot save Owner entity without an ID");
+    if (id) {
+      assert(
+        id.kind == ValueKind.STRING,
+        `Entities of type Owner must have an ID of type String but the id '${id.displayData()}' is of type ${id.displayKind()}`
+      );
+      store.set("Owner", id.toString(), this);
+    }
+  }
+
+  static load(id: string): Owner | null {
+    return changetype<Owner | null>(store.get("Owner", id));
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value!.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get tokens(): Array<string> {
+    let value = this.get("tokens");
+    return value!.toStringArray();
+  }
+
+  set tokens(value: Array<string>) {
+    this.set("tokens", Value.fromStringArray(value));
+  }
+
+  get numTokens(): BigInt {
+    let value = this.get("numTokens");
+    return value!.toBigInt();
+  }
+
+  set numTokens(value: BigInt) {
+    this.set("numTokens", Value.fromBigInt(value));
   }
 }
