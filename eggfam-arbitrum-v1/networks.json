@@ -1,0 +1,10 @@
+{
+  "arbitrum-one": {
+    "EGGSV2": {
+      "address": "0x31e06A414f5e89106b5071014fa5769f571fb07a"
+    },
+    "EGGSV1": {
+      "address": "0xa0dc9e505373e92ede773de021444ae251f9c171"
+    }
+  }
+}
