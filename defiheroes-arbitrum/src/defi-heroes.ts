@@ -232,7 +232,7 @@ export function handleTransfer(event: Transfer): void {
       }
     } else {
       // burn
-      store.remove("Token", id);
+      store.remove("Heroes", id);
       all.numTokens = all.numTokens.minus(BigInt.fromI32(1));
       // Store burned
       let burned = all.burned;

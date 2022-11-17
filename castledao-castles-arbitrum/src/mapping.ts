@@ -156,7 +156,7 @@ export function handleTransfer(event: Transfer): void {
       newOwner.save();
     } else {
       // burn
-      store.remove("Token", id);
+      store.remove("Castle", id);
       all.numTokens = all.numTokens.minus(BigInt.fromI32(1));
       // Store burned
       let burned = all.burned;

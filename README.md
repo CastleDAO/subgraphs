@@ -22,3 +22,8 @@ Once you completed the creation and installation, is time to:
 ## Deploying the graphs
 
 All the information available here: https://thegraph.com/docs/en/deploying/subgraph-studio/
+
+```
+graph auth --product hosted-service CODE
+graph deploy --product hosted-service [USER]/[GRAPH]
+```
