@@ -94,8 +94,11 @@ export function handleExperienceGained(event: ExperienceGained): void {
 
   let contract = DefiHeroes.bind(event.address);
 
-  if (defiHero) 
-    defiHero.experience = contract.experience(tokenId);
+  if (defiHero) {
+    let newXp = event.params.xpGained;
+    defiHero.experience = defiHero.experience.plus(newXp)
+    defiHero.save();
+  }
 }
 
 export function handleExperienceSpent(event: ExperienceSpent): void {}
@@ -117,7 +120,7 @@ export function handleLeveledUp(event: LeveledUp): void {
     defiHero.agility = contract.warriors(tokenId).getAgility();
     defiHero.magicResistance = contract.warriors(tokenId).getAgility();
     defiHero.constitution = contract.warriors(tokenId).getConstitution();
-    defiHero.level = contract.warriors(tokenId).getLevel();
+    defiHero.level = defiHero.level.plus(BigInt.fromI32(1))
     defiHero.experience = contract.experience(tokenId);
     defiHero.save();
   }
@@ -138,6 +141,13 @@ export function handleQuest(event: QuestEvent): void {
   quest.tokenID = tokenId;
   quest.date = event.block.timestamp;
   quest.xpEarned = event.params.xpGained;
+
+  let defiHero = Heroes.load(id);
+  if (defiHero){
+    defiHero.experience = defiHero.experience.plus(quest.xpEarned)
+    defiHero.save()
+  }
+  quest.save()
 }
 
 export function handleRoleAdminChanged(event: RoleAdminChanged): void {}
@@ -149,12 +159,13 @@ export function handleRoleRevoked(event: RoleRevoked): void {}
 export function handleTransfer(event: Transfer): void {
   let tokenId = event.params.tokenId;
   let id = event.address.toHex() + "_" + tokenId.toString();
+  let contractId = event.address.toHex();
   let from = event.params.from.toHex();
   let to = event.params.to.toHex();
 
   let contract = DefiHeroes.bind(event.address);
 
-  //all entity setup
+  //all entity setup 
   let all = All.load("all");
   if (all == null) {
     all = new All("all");
@@ -162,74 +173,77 @@ export function handleTransfer(event: Transfer): void {
     all.numTokens = BigInt.fromI32(0);
     all.minted = [];
     all.burned = [];
+  }
 
-    if (from != zeroAddress || to != zeroAddress) {
+  if (from != zeroAddress || to != zeroAddress) {
       //don't query transfert from nobody to nobody
 
-      if (from != zeroAddress) {
-        //if not minting
-        let currentOwner = Owner.load(from);
-        if (currentOwner != null) {
-          if (currentOwner.numTokens.equals(BigInt.fromI32(1))) {
-            all.numOwners = currentOwner.numTokens.minus(BigInt.fromI32(1));
-            currentOwner.save();
-          }
+    if (from != zeroAddress) {
+      //if not minting
+      let currentOwner = Owner.load(from);
+      if (currentOwner != null) {
+        if (currentOwner.numTokens.equals(BigInt.fromI32(1))) {
+          all.numOwners = all.numOwners.minus(BigInt.fromI32(1));
         }
-
-        if (to != zeroAddress) {
-          //if minting
-          let newOwner = Owner.load(to);
-          if (newOwner == null) {
-            newOwner = new Owner(to);
-            newOwner.numTokens = BigInt.fromI32(0);
-          }
-
-          let defiHero = Heroes.load(id);
-
-          if (defiHero == null) {
-            defiHero = new Heroes(id);
-            defiHero.tokenID = tokenId;
-            defiHero.mintTime = event.block.timestamp;
-            defiHero.tokenURI = contract.tokenURI(tokenId);
-            defiHero.speed = contract.warriors(tokenId).getSpeed();
-            defiHero.intelligence = contract
-              .warriors(tokenId)
-              .getIntelligence();
-            defiHero.strength = contract.warriors(tokenId).getStrength();
-            defiHero.abilityPower = contract
-              .warriors(tokenId)
-              .getAbilityPower();
-            defiHero.defense = contract.warriors(tokenId).getDefense();
-            defiHero.agility = contract.warriors(tokenId).getAgility();
-            defiHero.magicResistance = contract.warriors(tokenId).getAgility();
-            defiHero.constitution = contract
-              .warriors(tokenId)
-              .getConstitution();
-            defiHero.level = BigInt.fromI32(0);
-            defiHero.experience = contract.experience(tokenId);
-          }
-
-          if (from == zeroAddress) {
-            // mint +1
-            all.numTokens = all.numTokens.plus(BigInt.fromI32(1));
-
-            // Store minted
-            let minted = all.minted;
-            minted.push(tokenId);
-            all.minted = minted;
-          }
-
-          defiHero.owner = newOwner.id;
-          defiHero.save();
-
-          if (newOwner.numTokens.equals(BigInt.fromI32(0))) {
-            all.numOwners = all.numOwners.plus(BigInt.fromI32(1));
-          }
-
-          newOwner.numTokens = newOwner.numTokens.plus(BigInt.fromI32(1));
-          newOwner.save();
-        }
+        currentOwner.numTokens = currentOwner.numTokens.minus(
+          BigInt.fromI32(1)
+        );
+        currentOwner.save();
       }
+    }
+
+    if (to != zeroAddress) {
+      //if minting
+      let newOwner = Owner.load(to);
+      if (newOwner == null) {
+        newOwner = new Owner(to);
+        newOwner.numTokens = BigInt.fromI32(0);
+      }
+
+      let defiHero = Heroes.load(id);
+
+      if (defiHero == null) {
+        defiHero = new Heroes(id);
+        defiHero.tokenID = tokenId;
+        defiHero.mintTime = event.block.timestamp;
+        defiHero.tokenURI = contract.tokenURI(tokenId);
+        defiHero.speed = contract.warriors(tokenId).getSpeed();
+        defiHero.intelligence = contract
+          .warriors(tokenId)
+          .getIntelligence();
+        defiHero.strength = contract.warriors(tokenId).getStrength();
+        defiHero.abilityPower = contract
+          .warriors(tokenId)
+          .getAbilityPower();
+        defiHero.defense = contract.warriors(tokenId).getDefense();
+        defiHero.agility = contract.warriors(tokenId).getAgility();
+        defiHero.magicResistance = contract.warriors(tokenId).getAgility();
+        defiHero.constitution = contract
+          .warriors(tokenId)
+          .getConstitution();
+        defiHero.level = BigInt.fromI32(0);
+        defiHero.experience = contract.experience(tokenId);
+      }
+
+      if (from == zeroAddress) {
+        // mint +1
+        all.numTokens = all.numTokens.plus(BigInt.fromI32(1));
+
+        // Store minted
+        let minted = all.minted;
+        minted.push(tokenId);
+        all.minted = minted;
+      }
+
+      defiHero.owner = newOwner.id;
+      defiHero.save();
+
+      if (newOwner.numTokens.equals(BigInt.fromI32(0))) {
+        all.numOwners = all.numOwners.plus(BigInt.fromI32(1));
+      }
+
+      newOwner.numTokens = newOwner.numTokens.plus(BigInt.fromI32(1));
+      newOwner.save();
     } else {
       // burn
       store.remove("Token", id);
@@ -242,6 +256,7 @@ export function handleTransfer(event: Transfer): void {
   }
   all.save();
 }
+
 
 export function handleUnpaused(event: Unpaused): void {}
 
