@@ -18,7 +18,7 @@ import {
   WarriorCreated,
   SetXPPerQuestCall__Outputs,
 } from "../generated/DefiHeroes/DefiHeroes";
-import { Heroes, All, Owner, Quest } from "../generated/schema";
+import { Heroe, All, Owner, Quest } from "../generated/schema";
 
 let zeroAddress = "0x0000000000000000000000000000000000000000";
 
@@ -90,7 +90,7 @@ export function handleApprovalForAll(event: ApprovalForAll): void {}
 export function handleExperienceGained(event: ExperienceGained): void {
   let tokenId = event.params.tokenId;
   let id = event.address.toHex() + "_" + tokenId.toString();
-  let defiHero = Heroes.load(id);
+  let defiHero = Heroe.load(id);
 
   let contract = DefiHeroes.bind(event.address);
 
@@ -107,7 +107,7 @@ export function handleLeveledUp(event: LeveledUp): void {
   //here
   let tokenId = event.params.tokenId;
   let id = event.address.toHex() + "_" + tokenId.toString();
-  let defiHero = Heroes.load(id);
+  let defiHero = Heroe.load(id);
 
   let contract = DefiHeroes.bind(event.address);
 
@@ -142,7 +142,7 @@ export function handleQuest(event: QuestEvent): void {
   quest.date = event.block.timestamp;
   quest.xpEarned = event.params.xpGained;
 
-  let defiHero = Heroes.load(id);
+  let defiHero = Heroe.load(id);
   if (defiHero){
     defiHero.experience = defiHero.experience.plus(quest.xpEarned)
     defiHero.save()
@@ -200,10 +200,10 @@ export function handleTransfer(event: Transfer): void {
         newOwner.numTokens = BigInt.fromI32(0);
       }
 
-      let defiHero = Heroes.load(id);
+      let defiHero = Heroe.load(id);
 
       if (defiHero == null) {
-        defiHero = new Heroes(id);
+        defiHero = new Heroe(id);
         defiHero.tokenID = tokenId;
         defiHero.mintTime = event.block.timestamp;
         defiHero.tokenURI = contract.tokenURI(tokenId);
