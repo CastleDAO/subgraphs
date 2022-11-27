@@ -68,7 +68,8 @@ export function createApprovalForAllEvent(
 export function createExperienceGainedEvent(
   tokenId: BigInt,
   xpGained: BigInt,
-  xpRemaining: BigInt
+  xpRemaining: BigInt,
+  address: Address
 ): ExperienceGained {
   let experienceGainedEvent = changetype<ExperienceGained>(newMockEvent())
 
@@ -92,6 +93,8 @@ export function createExperienceGainedEvent(
       ethereum.Value.fromUnsignedBigInt(xpRemaining)
     )
   )
+
+  experienceGainedEvent.address = address
 
   return experienceGainedEvent
 }
@@ -130,7 +133,8 @@ export function createExperienceSpentEvent(
 export function createLeveledUpEvent(
   leveler: Address,
   tokenId: BigInt,
-  level: BigInt
+  level: BigInt,
+  address: Address
 ): LeveledUp {
   let leveledUpEvent = changetype<LeveledUp>(newMockEvent())
 
@@ -148,6 +152,8 @@ export function createLeveledUpEvent(
   leveledUpEvent.parameters.push(
     new ethereum.EventParam("level", ethereum.Value.fromUnsignedBigInt(level))
   )
+
+  leveledUpEvent.address = address;
 
   return leveledUpEvent
 }

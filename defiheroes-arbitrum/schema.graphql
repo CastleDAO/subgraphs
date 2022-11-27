@@ -1,4 +1,4 @@
-type Heroes @entity {
+type Heroe @entity {
   id: ID!
   tokenID: BigInt!
   owner: Owner!
@@ -33,6 +33,6 @@ type All @entity {
 
 type Owner @entity {
   id: ID!
-  tokens: [Heroes!]! @derivedFrom(field: "owner")
+  tokens: [Heroe!]! @derivedFrom(field: "owner")
   numTokens: BigInt!
 }
