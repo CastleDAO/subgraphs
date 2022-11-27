@@ -27,3 +27,15 @@ All the information available here: https://thegraph.com/docs/en/deploying/subgr
 graph auth --product hosted-service CODE
 graph deploy --product hosted-service [USER]/[GRAPH]
 ```
+
+## Adding a new subgraph
+
+```
+npx graph init --product subgraph-studio --network arbitrum-one --from-contract 0X0000
+```
+
+To add a new contract to an existing subgraph: 
+
+```
+npx graph add 0x000  --contract-name ContractName
+```
