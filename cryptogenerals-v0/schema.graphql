@@ -1,0 +1,36 @@
+type Quest @entity(immutable: true) {
+  id: Bytes!
+  tokenId: BigInt! # uint256
+  xpGained: BigInt! # uint256
+  xpTotal: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type General @entity {
+  id: ID!
+  tokenID: BigInt!
+  owner: Owner!
+  mintTime: BigInt!
+  name: String!
+  tokenURI: String!
+  level: BigInt!
+  speed: BigInt!
+  intelligence: BigInt!
+  strength: BigInt!
+  abilityPower: BigInt!
+  charisma: BigInt!
+  defense: BigInt!
+  agility: BigInt!
+  magicResistance: BigInt!
+  constitution: BigInt!
+  experience: BigInt!
+  bio: String!
+}
+
+type Owner @entity {
+  id: ID!
+  tokens: [General!]! @derivedFrom(field: "owner")
+  numTokens: BigInt!
+}

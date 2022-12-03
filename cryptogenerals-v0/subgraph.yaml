@@ -1,0 +1,65 @@
+specVersion: 0.0.5
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Generals
+    network: arbitrum-one
+    source:
+      address: "0x1aaec0fa487a979a3f6b46dccf0ac2648167a61e"
+      abi: Generals
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Approval
+        - ApprovalForAll
+        - AssignedCastle
+        - BioChanged
+        - ExperienceGained
+        - ExperienceSpent
+        - GeneralCreated
+        - LeveledUp
+        - NameChanged
+        - OwnershipTransferred
+        - Quest
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - Transfer
+      abis:
+        - name: Generals
+          file: ./abis/Generals.json
+      eventHandlers:
+        - event: Approval(indexed address,indexed address,indexed uint256)
+          handler: handleApproval
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: AssignedCastle(uint256,uint256)
+          handler: handleAssignedCastle
+        - event: BioChanged(uint256,string)
+          handler: handleBioChanged
+        - event: ExperienceGained(uint256,uint256,uint256)
+          handler: handleExperienceGained
+        - event: ExperienceSpent(uint256,uint256,uint256)
+          handler: handleExperienceSpent
+        - event: GeneralCreated(string,uint256,(string,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256))
+          handler: handleGeneralCreated
+        - event: LeveledUp(indexed address,uint256,uint256)
+          handler: handleLeveledUp
+        - event: NameChanged(uint256,string)
+          handler: handleNameChanged
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: Quest(uint256,uint256,uint256)
+          handler: handleQuest
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: ./src/generals.ts

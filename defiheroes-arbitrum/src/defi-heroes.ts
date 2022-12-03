@@ -129,7 +129,7 @@ export function handleLeveledUp(event: LeveledUp): void {
     defiHero.agility = entity.getAgility();
     defiHero.magicResistance = entity.getAgility();
     defiHero.constitution = entity.getConstitution();
-    defiHero.level = defiHero.level.plus(BigInt.fromI32(1));
+    defiHero.level = entity.getLevel();
     defiHero.experience = contract.experience(tokenId);
     defiHero.save();
   }
@@ -224,7 +224,7 @@ export function handleTransfer(event: Transfer): void {
         defiHero.agility = entity.getAgility();
         defiHero.magicResistance = entity.getAgility();
         defiHero.constitution = entity.getConstitution();
-        defiHero.level = BigInt.fromI32(0);
+        defiHero.level = entity.getLevel();
         defiHero.experience = contract.experience(tokenId);
       }
 
