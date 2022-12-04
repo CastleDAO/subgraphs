@@ -176,6 +176,7 @@ export function handleTransfer(event: TransferEvent): void {
         general.constitution = entity.getConstitution();
         general.level = entity.getLevel();
         general.experience = contract.experience(tokenId);
+        general.bio = '';
         general.name = entity.getName();
       }
 

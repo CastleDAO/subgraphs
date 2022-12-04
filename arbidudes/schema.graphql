@@ -1,0 +1,22 @@
+type ChatMessage @entity(immutable: true) {
+  id: Bytes!
+  from: BigInt! # uint256
+  to: BigInt! # uint256
+  message: String!
+}
+
+type Dude @entity {
+  id: ID!
+  tokenID: BigInt!
+  owner: Owner!
+  mintTime: BigInt!
+  name: String!
+  tokenURI: String!
+  souls: [BigInt!]!
+}
+
+type Owner @entity {
+  id: ID!
+  tokens: [Dude!]! @derivedFrom(field: "owner")
+  numTokens: BigInt!
+}
